@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Button, FormField} from 'semantic-ui-react';
-import {isEmail} from 'validator';
+//import EmailValidator from 'email-validator';
 import InlineError from '../messages/InlineError';
 import PropTypes from 'prop-types';
 
@@ -11,7 +11,10 @@ class LoginForm extends React.Component {
             password : ''
         },
         loading : false,
-        errors : {}
+        errors : {
+            email : '',
+            password : ''
+        }
     };
 
     onChange = (e) => this.setState({
@@ -33,9 +36,12 @@ class LoginForm extends React.Component {
             errors.password = "Password can't be blank";
         }
 
-        if(!isEmail(data.email)) {
-            errors.email = "Invalid email!";
+        if(!data.email){
+            errors.email = "Email can't be blank";
         }
+       // if(!EmailValidator.validate(data.email)){
+       //     errors.email = 'Invalid email!';    
+       // }
 
         return errors;
     }
