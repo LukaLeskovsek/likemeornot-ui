@@ -6,7 +6,10 @@ import {login} from '../../actions/auth';
 
 class LoginPage extends React.Component {
     
-    submit = data => this.props.login(data).then( () => this.props.history.push("/"));
+    submit = data => {
+        const login_res = this.props.login(data).then();
+        return login_res.then(() => this.props.history.push("/dashboard"));//return login_res;    
+    };
 
     render() {
         return (
@@ -18,7 +21,7 @@ class LoginPage extends React.Component {
     };
 };
 
-LoginPage.propTypes = {
+LoginPage.propTypes = {                                                                                                                                         
     history : PropTypes.shape(
         {
             push : PropTypes.func.isRequired

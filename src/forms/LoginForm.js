@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Button, FormField} from 'semantic-ui-react';
+import {Form, Button, FormField, Messaage, Message} from 'semantic-ui-react';
 //import EmailValidator from 'email-validator';
 import InlineError from '../messages/InlineError';
 import PropTypes from 'prop-types';
@@ -11,10 +11,7 @@ class LoginForm extends React.Component {
             password : ''
         },
         loading : false,
-        errors : {
-            email : '',
-            password : ''
-        }
+        errors : {}
     };
 
     onChange = (e) => this.setState({
@@ -25,7 +22,9 @@ class LoginForm extends React.Component {
         const errors = this.validate(this.state.data);
         this.setState({errors});
         if(Object.keys(errors).length === 0) {
-            this.props.submit(this.state.data);
+            this.props.submit(this.state.data).catch(err =>
+                this.setState({ errors: err.response.data.errors })
+              );;
         }
     };
 
@@ -51,6 +50,7 @@ class LoginForm extends React.Component {
         return (
             <div>
                 <Form onSubmit={this.onSubmit}>
+                {errors.global && <Message negative><Message.Header>Something wong</Message.Header><p>{errors.global}</p></Message>}
                     <FormField>
                         <label htmlFor="email">Email</label>
                         <input type="email" 
@@ -81,7 +81,7 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-    submit : PropTypes.func.isRequired
+    submit : PropTypes.func.isRequired,
 }
 
 export default LoginForm;
