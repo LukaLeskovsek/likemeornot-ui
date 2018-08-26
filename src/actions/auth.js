@@ -17,8 +17,8 @@ export const userLoggedOut = () => (
 export const userInvalidCredentials = (data) => (
     {
         type : USER_INVALID_CREDENTIALS,
-        errors : data.errors,
-        user : data
+        errors : {...data.errors, email:'', password :''},
+        user : data.user
     }
 )
 
@@ -42,3 +42,14 @@ export function logout() {
         dispatch(userLoggedOut());
     }
 }
+
+export function signup(data) {
+    const signup_req = api.user.signup(data);
+
+    return (dispatch) =>{
+        return signup_req.then( (res) => {
+            localStorage.likemeornotJWT = res.data.user.token;
+            dispatch(userLoggedIn(res.data.user));             
+        } ); 
+    }
+};

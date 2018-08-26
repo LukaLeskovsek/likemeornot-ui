@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Button, FormField, Messaage, Message} from 'semantic-ui-react';
+import {Form, Button, FormField, Message} from 'semantic-ui-react';
 //import EmailValidator from 'email-validator';
 import InlineError from '../messages/InlineError';
 import PropTypes from 'prop-types';
@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
         this.setState({errors});
         if(Object.keys(errors).length === 0) {
             this.props.submit(this.state.data).catch(err =>
-                this.setState({ errors: err.response.data.errors })
+                this.setState({ errors: err.response.errors })
               );;
         }
     };
