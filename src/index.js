@@ -9,7 +9,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './rootReducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import { userLoggedIn } from './actions/auth';
+import { userLoggedIn } from './actions/actions';
 
 
 

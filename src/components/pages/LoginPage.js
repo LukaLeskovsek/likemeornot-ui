@@ -2,7 +2,7 @@ import React from 'react';
 import LoginForm from '../../forms/LoginForm';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
-import {login} from '../../actions/auth';
+import {login} from '../../actions/actions';
 
 class LoginPage extends React.Component {
     

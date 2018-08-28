@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 //eslint-disable-next-line
-import user from '../src/reducers/user';
+import common from './reducers/common.reducer';
 
 export default combineReducers({
-    user
+    common
 })

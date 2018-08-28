@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import * as actions from "../../actions/auth";
+import * as actions from "../../actions/actions";
 
 class HomePage extends React.Component {
     constructor(props){
@@ -31,8 +31,7 @@ HomePage.propTypes = {
 };
 
 function mapStateToProps(state) {
-    console.log('MapState', state);
-    return {  isAuthenticated: !!state.user.token  };
+    return {  isAuthenticated: !!state.common.user.token  };
 }
 
 export default connect(mapStateToProps, { logout: actions.logout })(HomePage);
