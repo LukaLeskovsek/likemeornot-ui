@@ -1,11 +1,9 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import MainPage from './MainPage';
 import SidebarPage from './SidebarPage';
 
 class DashboardPage extends React.Component{
-
     render(){
         return (
             <div className="ui grid">
@@ -19,10 +17,11 @@ class DashboardPage extends React.Component{
         )
     }
 };
-
   
 function mapStateToProps(state) {
-    return {  isAuthenticated: !!state.common.user.token  };
+    return {  
+        isAuthenticated: !!state.common.user.token  
+    };
 }
 
 export default connect(mapStateToProps, null)(DashboardPage);

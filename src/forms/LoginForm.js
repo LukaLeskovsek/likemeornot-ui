@@ -3,7 +3,6 @@ import {Form, Button, FormField, Message} from 'semantic-ui-react';
 //import EmailValidator from 'email-validator';
 import InlineError from '../messages/InlineError';
 import PropTypes from 'prop-types';
-
 class LoginForm extends React.Component {
     state = {
         data : {

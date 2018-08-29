@@ -16,8 +16,8 @@ export default {
         userDetails : (userId) => {
             return axios.get('api/user/'+userId, {});
         },
-        likeUser : (userId) =>{
-            return axios.post('api/user/'+userId+'/like', {});
+        likeUser : (userId, likedByUserEmail) =>{
+            return axios.post('api/user/'+userId+'/like', {likedByUserEmail});
         }
     }
 }

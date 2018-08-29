@@ -8,10 +8,10 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './rootReducer';
+import decode from 'jwt-decode';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import { userLoggedIn } from './actions/actions';
-
-
+import setAuthorizationHeader from './setAuthorizationHeader';
 
 const store = createStore(
     rootReducer,
@@ -19,13 +19,20 @@ const store = createStore(
 );
 
 if(localStorage.likemeornotJWT){
+    //in production it's almost a must-have that you set an expiration period on your t
+    console.log('before set authorization header token -. ', localStorage.likemeornotJWT);
+    const payload = decode(localStorage.likemeornotJWT);
+
     const user = {
+        email : payload.email,
         token : localStorage.likemeornotJWT
     };
 
+    console.log('before set authorization header token -. ', localStorage.likemeornotJWT);
+    setAuthorizationHeader(localStorage.likemeornotJWT);
+
     store.dispatch(userLoggedIn(user));
 }
-
 
 ReactDOM.render(<BrowserRouter>
                     <Provider store={store}>

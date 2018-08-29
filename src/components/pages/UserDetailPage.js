@@ -2,18 +2,18 @@ import React from 'react';
 import {Image, Item, Icon, Button} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {userDetails, likeUser } from './../../actions/actions';
+import {fetchUserDetails, likeUser } from './../../actions/actions';
 
 class UserDetailPage extends React.Component {
 
     componentDidMount(){
         if(!!this.props.userDetails){
-            this.props.dispatch(userDetails(this.props.user.id));
+            this.props.dispatch(fetchUserDetails(this.props.user.id));
         }
     }
 
     onLikeUser(userId){
-        this.props.dispatch(likeUser(userId));
+        this.props.dispatch(likeUser(userId, this.props.user.email));
     }
 
     render(){
@@ -33,7 +33,7 @@ class UserDetailPage extends React.Component {
                 <Button icon onClick={() => this.onLikeUser(this.props.userDetails._id)}>
                     <Icon name='heart' />
                     {this.props.userDetails.likes} Likes - Do you Like me?!
-                </Button>                
+                </Button>      
             </div>
         )
     }

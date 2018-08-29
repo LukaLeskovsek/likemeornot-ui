@@ -1,13 +1,13 @@
 import React from 'react';
 import {Image, Card, Icon} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import {userDetails} from './../../actions/actions';
+import {fetchUserDetails} from './../../actions/actions';
 import { connect } from 'react-redux';
 
 class UserPage extends React.Component {
 
     onUserSelect = (userId) => {
-        this.props.dispatch(userDetails(userId));
+        this.props.dispatch(fetchUserDetails(userId));
     }
 
     render(){
@@ -31,5 +31,9 @@ class UserPage extends React.Component {
         )
     }
 };
+
+UserPage.propTypes = {
+    fetchUserDetails : PropTypes.func.isRequired
+}
 
 export default connect()(UserPage);

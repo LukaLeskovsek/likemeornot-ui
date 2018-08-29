@@ -1,7 +1,7 @@
 import {
     USER_LOGGED_IN, USER_INVALID_CREDENTIALS, USER_LOGGED_OUT,
     USER_LIST_FETCH_BEGIN, USER_LIST_FETCH_SUCCESS, USER_LIST_FETCH_FAILURE,
-    USER_DETAILS_FETCH_SUCCESS
+    USER_DETAILS_FETCH_SUCCESS, USER_LIKE_SUCCESS
 } from '../types';
 
 import api from '../api';
@@ -47,10 +47,17 @@ export const userListFetchBegin = () => (
     }
 );
 
-export const userDetailsFetchSuccess = (userDetails) => (
+export const fetchUserDetailsSuccess = (userDetails) => (
     {
         type : USER_DETAILS_FETCH_SUCCESS,
         payload : {userDetails}
+    }
+)
+
+export const userLikeSuccess = (res) =>(
+    {
+        type : USER_LIKE_SUCCESS,
+        payload : {res}
     }
 )
 
@@ -98,21 +105,25 @@ export function fetchUsers() {
     }
 };
 
-export function userDetails(userId) {
+export function fetchUserDetails(userId) {
     return (dispatch) => {
         const fetch_req = api.users.userDetails(userId);
         return fetch_req.then( res => {
-            dispatch(userDetailsFetchSuccess(res.data.userDetails));
+            dispatch(fetchUserDetailsSuccess(res.data.userDetails));
         })
     }
 }
 
-export function likeUser(userId) {
+export function likeUser(userId, likedByUserEmail) {
+    //Best solution here would be that we compare our current state and update the user localy ; 
+    // and we fetch new users only on demand - but for these simple scenario this is going to be just fine
     return (dispatch) => {
-        api.users.likeUser(userId).then( (res) => {         
-            dispatch(userDetails(userId));
-            dispatch(fetchUsers()); 
+        api.users.likeUser(userId,likedByUserEmail).then( (res) => {   
+            dispatch(userLikeSuccess(res));
+            dispatch(fetchUserDetails(userId));
+            dispatch(fetchUsers());             
+        }).catch(err => {
+            console.log('Like error - ', err);
         });
     }
 }
-

@@ -16,6 +16,7 @@ const App = ({location}) => (<div className='ui stackable container'>
   </div>
 );
 
+
 App.propTypes = {
   location : PropTypes.shape(
     {
@@ -23,8 +24,5 @@ App.propTypes = {
     }
   )
 }
-
-
-
 
 export default App;

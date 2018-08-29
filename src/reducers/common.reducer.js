@@ -1,7 +1,7 @@
 import {
     USER_LOGGED_IN, USER_INVALID_CREDENTIALS, USER_LOGGED_OUT,
     USER_LIST_FETCH_BEGIN, USER_LIST_FETCH_SUCCESS, USER_LIST_FETCH_FAILURE,
-    USER_DETAILS_FETCH_SUCCESS
+    USER_DETAILS_FETCH_SUCCESS, USER_LIKE_SUCCESS
 } from '../types';
 
 const initialState = {
@@ -23,7 +23,7 @@ export default function auth(state = initialState, action = { }){
             }
             return ;
         case USER_LOGGED_OUT :
-            return { ...state };
+            return { ...state, user : {} };
 
         case USER_LIST_FETCH_BEGIN : 
             return {
@@ -50,6 +50,12 @@ export default function auth(state = initialState, action = { }){
             loading : false,
             error : action.payload.error,
             userDetails : action.payload.userDetails
+        }
+        case USER_LIKE_SUCCESS : 
+        return {
+            ...state, 
+            loading : false,
+            error : !action.payload.errors
         }
         default : return state;
     }

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../actions/actions";
-
 class HomePage extends React.Component {
     constructor(props){
         super(props);

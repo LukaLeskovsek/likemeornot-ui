@@ -22,5 +22,4 @@ class SidebarPage extends React.Component {
     }
 };
 
-
 export default connect()(SidebarPage);
