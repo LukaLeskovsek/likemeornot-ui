@@ -9,7 +9,6 @@ class SignupPage extends React.Component {
     submit = (data) => this.props.signup(data).then( () => this.props.history.push('/dashboard'))
 
     render(){
-
         return(
             <SignupForm submit={this.submit} />
         );

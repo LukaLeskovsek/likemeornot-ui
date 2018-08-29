@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, Item, Icon, Button} from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {fetchUserDetails, likeUser } from './../../actions/actions';
 
