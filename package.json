@@ -26,6 +26,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5"
   },
   "proxy": "http://localhost:9000/"
