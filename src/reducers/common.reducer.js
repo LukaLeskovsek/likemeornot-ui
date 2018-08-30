@@ -15,6 +15,7 @@ const initialState = {
   };
 
 export default function auth(state = initialState, action = { }){
+    console.log('REDUCER : ', action);
     switch(action.type) {
         case USER_LOGGED_IN : 
             return {
@@ -49,7 +50,7 @@ export default function auth(state = initialState, action = { }){
             ...state,
             loading : false,
             error : action.payload.error,
-            userDetails : action.payload.userDetails
+            userDetails : action.payload.userDetails[0]
         }
         case USER_LIKE_SUCCESS : 
         return {

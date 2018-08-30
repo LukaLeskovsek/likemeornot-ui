@@ -32,8 +32,4 @@ class UserPage extends React.Component {
     }
 };
 
-UserPage.propTypes = {
-    fetchUserDetails : PropTypes.func.isRequired
-}
-
 export default connect()(UserPage);

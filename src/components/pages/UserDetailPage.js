@@ -6,9 +6,10 @@ import {fetchUserDetails, likeUser } from './../../actions/actions';
 class UserDetailPage extends React.Component {
 
     componentDidMount(){
-        if(!!this.props.userDetails){
+        //if(!!this.props.userDetails){
             this.props.dispatch(fetchUserDetails(this.props.user.id));
-        }
+            console.log('User detail : ', this.props.userDetails);
+        //}
     }
 
     onLikeUser(userId){

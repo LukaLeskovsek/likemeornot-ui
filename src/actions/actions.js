@@ -109,6 +109,7 @@ export function fetchUserDetails(userId) {
     return (dispatch) => {
         const fetch_req = api.users.userDetails(userId);
         return fetch_req.then( res => {
+            console.log('User details 2 : ',res.data.userDetails);
             dispatch(fetchUserDetailsSuccess(res.data.userDetails));
         })
     }
