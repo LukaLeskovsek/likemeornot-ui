@@ -20,15 +20,14 @@ const store = createStore(
 
 if(localStorage.likemeornotJWT){
     //in production it's almost a must-have that you set an expiration period on your t
-    console.log('before set authorization header token -. ', localStorage.likemeornotJWT);
     const payload = decode(localStorage.likemeornotJWT);
 
     const user = {
         email : payload.email,
+        id : payload.id,
         token : localStorage.likemeornotJWT
     };
-
-    console.log('before set authorization header token -. ', localStorage.likemeornotJWT);
+    
     setAuthorizationHeader(localStorage.likemeornotJWT);
 
     store.dispatch(userLoggedIn(user));

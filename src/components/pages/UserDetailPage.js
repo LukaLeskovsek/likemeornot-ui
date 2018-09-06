@@ -2,14 +2,12 @@ import React from 'react';
 import {Image, Item, Icon, Button} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import {fetchUserDetails, likeUser } from './../../actions/actions';
+import InlineError from '../../messages/InlineError';
 
 class UserDetailPage extends React.Component {
 
     componentDidMount(){
-        //if(!!this.props.userDetails){
-            this.props.dispatch(fetchUserDetails(this.props.user.id));
-            console.log('User detail : ', this.props.userDetails);
-        //}
+        this.props.dispatch(fetchUserDetails(this.props.user.id));
     }
 
     onLikeUser(userId){

@@ -1,7 +1,7 @@
 import {
     USER_LOGGED_IN, USER_INVALID_CREDENTIALS, USER_LOGGED_OUT,
     USER_LIST_FETCH_BEGIN, USER_LIST_FETCH_SUCCESS, USER_LIST_FETCH_FAILURE,
-    USER_DETAILS_FETCH_SUCCESS, USER_LIKE_SUCCESS
+    USER_DETAILS_FETCH_SUCCESS, USER_LIKE_SUCCESS, USER_LIKE_FAILURE
 } from '../types';
 
 const initialState = {
@@ -15,14 +15,17 @@ const initialState = {
   };
 
 export default function auth(state = initialState, action = { }){
-    console.log('REDUCER : ', action);
     switch(action.type) {
         case USER_LOGGED_IN : 
             return {
                 ...state,
                 user : action.user
             }
-            return ;
+        case USER_INVALID_CREDENTIALS : 
+            return {
+                ...state,
+                error : action.payload
+            }
         case USER_LOGGED_OUT :
             return { ...state, user : {} };
 
@@ -56,7 +59,13 @@ export default function auth(state = initialState, action = { }){
         return {
             ...state, 
             loading : false,
-            error : !action.payload.errors
+            error : action.payload.errors
+        }
+        case USER_LIKE_FAILURE : 
+        return {
+            ...state,
+            loading : false,
+            error : action.payload.errors
         }
         default : return state;
     }

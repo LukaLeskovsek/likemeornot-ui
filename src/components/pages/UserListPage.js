@@ -1,7 +1,6 @@
 import { Header, Item, Image, Icon } from 'semantic-ui-react';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import UserPage from './UserPage';
 

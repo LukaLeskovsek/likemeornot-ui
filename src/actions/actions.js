@@ -1,7 +1,7 @@
 import {
     USER_LOGGED_IN, USER_INVALID_CREDENTIALS, USER_LOGGED_OUT,
     USER_LIST_FETCH_BEGIN, USER_LIST_FETCH_SUCCESS, USER_LIST_FETCH_FAILURE,
-    USER_DETAILS_FETCH_SUCCESS, USER_LIKE_SUCCESS
+    USER_DETAILS_FETCH_SUCCESS, USER_LIKE_SUCCESS, USER_LIKE_FAILURE
 } from '../types';
 
 import api from '../api';
@@ -19,13 +19,13 @@ export const userLoggedOut = () => (
         user : {}
     }
 );
-export const userInvalidCredentials = (data) => (
-    {
+export const userInvalidCredentials = (data) => {
+    console.log('userInvalidCredentials : ', data);
+    return ({
         type : USER_INVALID_CREDENTIALS,
-        errors : {...data.errors, email:'', password :''},
-        user : data.user
-    }
-)
+        payload : data.errors
+    })
+}
 
 export const userListFetchFailure = (error) => (    
     {
@@ -61,20 +61,21 @@ export const userLikeSuccess = (res) =>(
     }
 )
 
+export const userLikeFailure = (res) => (
+    {
+        type : USER_LIKE_FAILURE,
+        payload : {res}
+    }
+)
+
 export function login (credentials) { 
     const login_req = api.auth.login(credentials);
     return (dispatch) => {
-        return login_req.then((res) => {
-            if(res.data.errors){             
-                dispatch(userInvalidCredentials(res.data))
-            }else {
-                localStorage.likemeornotJWT = res.data.user.token;
-                dispatch(userLoggedIn(res.data.user))
-            }
-        }).catch(err => {
-            dispatch(userInvalidCredentials(err))
-        })
-    }
+        return login_req
+        .then((res) => {
+            localStorage.likemeornotJWT = res.data.user.token;
+            dispatch(userLoggedIn(res.data.user))            
+        }).catch(err => {throw new Error("Invalid credentials")})}
 };
 
 export function logout() {
@@ -108,23 +109,21 @@ export function fetchUsers() {
 export function fetchUserDetails(userId) {
     return (dispatch) => {
         const fetch_req = api.users.userDetails(userId);
-        return fetch_req.then( res => {
-            console.log('User details 2 : ',res.data.userDetails);
-            dispatch(fetchUserDetailsSuccess(res.data.userDetails));
-        })
+        return fetch_req.then( res => dispatch(fetchUserDetailsSuccess(res.data.userDetails)))
     }
 }
 
 export function likeUser(userId, likedByUserEmail) {
     //Best solution here would be that we compare our current state and update the user localy ; 
-    // and we fetch new users only on demand - but for these simple scenario this is going to be just fine
+    // and we fetch new users only on demand - but for this simple usecase it's is going to be just fine
     return (dispatch) => {
-        api.users.likeUser(userId,likedByUserEmail).then( (res) => {   
-            dispatch(userLikeSuccess(res));
-            dispatch(fetchUserDetails(userId));
-            dispatch(fetchUsers());             
-        }).catch(err => {
-            console.log('Like error - ', err);
+        api.users.likeUser(userId,likedByUserEmail)
+        .then(res => dispatch(userLikeSuccess(res)))
+        .then(res => dispatch(fetchUserDetails(userId)))
+        .then(res => dispatch(fetchUsers()))
+        .catch(err => {
+            console.log('Error like user dispatch :', err);
+            dispatch(userLikeFailure(err))
         });
     }
 }
